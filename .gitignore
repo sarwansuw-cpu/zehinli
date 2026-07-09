@@ -15,7 +15,7 @@ models/
 
 # Data
 data/corpus/
-data/processed/
+# data/processed/ - корпус хранится в репозитории
 
 # IDE
 .vscode/
