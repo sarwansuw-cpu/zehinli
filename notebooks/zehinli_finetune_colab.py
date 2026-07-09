@@ -8,7 +8,7 @@
 # 1. Gerekli kitaplanalary gurnamak
 !pip install -q unsloth[colab-new] bitsandbytes
 !pip install -q transformers datasets accelerate sentencepiece protobuf
-!pip install -q git+https://github.com/huggingface/trl.git
+!pip install -q trl==0.24.0 --force-reinstall
 
 # 2. Repony klonlamak we korpusy yuklemek
 import json, os
