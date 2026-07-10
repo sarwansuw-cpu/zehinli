@@ -49,13 +49,11 @@
 - ✅ Project structure created
 - ✅ Corpus collected and processed (2084 texts)
 - ✅ Colab notebook created (.ipynb + .py versions)
-- ✅ All pushed to GitHub
-- ⏳ **User is currently training in Colab** — encountered error: forgot to select GPU (NotImplementedError: no GPU)
-  - Fix: Runtime → Сменить среду выполнения → T4 GPU → Выполнить всё
-- ⏳ After training: copy model folder from Google Drive to server
+- ✅ **FIXED:** torch/torchvision version conflict & git clone error
+- ⏳ User needs to push fixes to GitHub, then re-run in Colab
 
 ## Colab Training
-**Рекомендуемый способ (без JSON ошибок):**
+**Рекомендуемый способ:**
 1. Открыть https://colab.research.google.com/
 2. Создать **"Новый ноутбук"**
 3. Вставить в первую ячейку:
@@ -65,6 +63,12 @@
    ```
 4. **ВАЖНО:** Среда выполнения → Сменить среду выполнения → T4 GPU
 5. Среда выполнения → Выполнить всё
+
+**Что исправлено:**
+- **Ошибка torch/torchvision:** Colab теперь (2026) поставляется с torch 2.13.0. Старый скрипт пытался force-reinstall torch 2.5.0, что не сработало. Теперь: `pip uninstall -y torch` → `pip install unsloth[colab-new]` (unsloth сам тянет совместимый torch).
+- **Ошибка `!pip install` в .py:** Скрипт содержал `!pip` (IPython магия), не работал через `python3`. Переписан на `subprocess.check_call`.
+- **Ошибка git clone:** При повторном запуске `git clone` падал. Теперь проверка `if os.path.exists`: `git pull` вместо `git clone`.
+- **TRL:** Вместо `git+https://github.com/huggingface/trl.git` используется стабильный `trl` из pip.
 
 ## Notes
 - DeepSeek V4 Flash cannot be self-hosted — using Qwen2.5-7B instead

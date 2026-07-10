@@ -1,21 +1,31 @@
 # Zehinli EA - Qwen2.5-7B Fine-tuning
 # Turkmen dilinde doklad, referat, konspekt we prezentasiya
-# ------------------------------------------------------------------
-# Aşakdaky ähli kodlary Colab-da birinji ýaýa (cell) goýuň
-# Soň Runtime -> Run all
-# ------------------------------------------------------------------
+
+import subprocess
+import sys
+import os
+import json
+
+def pip_install(*packages):
+    cmd = [sys.executable, '-m', 'pip', 'install', '-q']
+    cmd.extend(packages)
+    subprocess.check_call(cmd)
+
+def run_cmd(*args):
+    subprocess.check_call(args)
 
 # 1. Gerekli kitaplanalary gurnamak
-!pip install torch==2.5.0 torchvision==0.20.0 --index-url https://download.pytorch.org/whl/cu121 --force-reinstall -q
-!pip install -q unsloth[colab-new] bitsandbytes
-!pip install -q transformers datasets accelerate sentencepiece protobuf
-!pip install -q trl==0.24.0 --force-reinstall
+pip_install('--upgrade', 'pip')
+pip_install('unsloth[colab-new]', 'bitsandbytes')
+pip_install('transformers', 'datasets', 'accelerate', 'sentencepiece', 'protobuf', 'trl')
 
 # 2. Repony klonlamak we korpusy yuklemek
-import json, os
 from datasets import Dataset
 
-!git clone https://github.com/sarwansuw-cpu/zehinli.git
+if os.path.exists('/content/zehinli'):
+    run_cmd('git', '-C', '/content/zehinli', 'pull')
+else:
+    run_cmd('git', 'clone', 'https://github.com/sarwansuw-cpu/zehinli.git')
 
 corpus_path = '/content/zehinli/data/processed/corpus.jsonl'
 texts = []
