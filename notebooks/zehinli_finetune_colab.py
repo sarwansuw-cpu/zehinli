@@ -6,6 +6,7 @@
 # ------------------------------------------------------------------
 
 # 1. Gerekli kitaplanalary gurnamak
+!pip install torch==2.5.0 torchvision==0.20.0 --index-url https://download.pytorch.org/whl/cu121 --force-reinstall -q
 !pip install -q unsloth[colab-new] bitsandbytes
 !pip install -q transformers datasets accelerate sentencepiece protobuf
 !pip install -q trl==0.24.0 --force-reinstall
